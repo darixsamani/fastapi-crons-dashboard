@@ -1,12 +1,6 @@
 import React from 'react';
-import {UserOutlined, HomeOutlined } from '@ant-design/icons';
+import {HomeOutlined } from '@ant-design/icons';
 import { SiIobroker } from "react-icons/si";
-import { FaShareNodes } from "react-icons/fa6";
-import { MdSubscriptions, MdPublish, MdTopic } from "react-icons/md";
-import { BsPlugin } from "react-icons/bs";
-import { TbRouteSquare2 } from "react-icons/tb";
-import { IoStatsChart } from "react-icons/io5";
-import { SiVictoriametrics } from "react-icons/si";
 import { Layout, Menu, theme } from 'antd';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import type { MenuProps } from 'antd';
