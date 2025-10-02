@@ -20,7 +20,7 @@ app.include_router(get_cron_router(), prefix="/api")
 
 @app.get("/")
 def root():
-    return {"message": "Hello let's create standlone dashbord for fastapi_crons package"}
+    return {"message": "Hello! Let's create a standalone dashboard for the fastapi_crons package."}
 
 @crons.cron("*/5 * * * *", name="print_hello")
 def print_hello():
