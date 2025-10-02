@@ -23,7 +23,7 @@ app.mount("/dist", StaticFiles(directory="dist/", html=True), name="admin")
 
 @app.get("/")
 def root():
-    return {"message": "Hello let's create standlone dashbord for fastapi_crons package"}
+    return {"message": "Hello! Let's create a standalone dashboard for the fastapi_crons package."}
 
 @app.get("/dashboard/")
 def dashbord(request: Request):
