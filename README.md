@@ -31,7 +31,7 @@ Spin up the full stack (**frontend + backend**) using Docker Compose:
 docker compose up --build -d
 ```
 
-- 🌐 Frontend:  [http://0.0.0.0:8080](http://0.0.0.0:300)
+- 🌐 Frontend:  [http://0.0.0.0:3000](http://0.0.0.0:3000)
 - ⚙️ Backend API:  [http://0.0.0.0:8080](http://0.0.0.0:8080)
 
 
