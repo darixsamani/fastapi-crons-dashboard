@@ -47,8 +47,8 @@ Take a look at the live demonstration below 👇
 ```
 fastapi-crons-dashboard/
 ├── backend/
-│   ├── app/
-│   │   ├── main.py
+│   ├── main.py
+|   ├── app.py
 │   ├── Dockerfile
 │   └── pyproject.toml
 │
