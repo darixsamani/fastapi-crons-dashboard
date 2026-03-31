@@ -1,8 +1,9 @@
 from fastapi import FastAPI, Request
 from fastapi_crons import Crons, get_cron_router
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
 
 app = FastAPI()
 
@@ -19,25 +20,15 @@ crons = Crons(app)
 
 app.include_router(get_cron_router(), prefix="/api")
 
-app.mount("/dist", StaticFiles(directory="dist/", html=True), name="admin")
+app.mount("/assets", StaticFiles(directory="dist", html=True), name="frontend")
+
+# @app.get("/")
+# def root():
+#     return {"message": "Hello! Let's create a standalone dashboard for the fastapi_crons package."}
 
 @app.get("/")
-def root():
-    return {"message": "Hello! Let's create a standalone dashboard for the fastapi_crons package."}
-
-@app.get("/dashboard/")
-def dashbord(request: Request):
-    with open("dist/index.html", "r") as f:
-        html = f.read()
-
-    backend_url = str(request.base_url)
-    print(f"host of backend: {backend_url}")
-
-    # Replace placeholder with real value
-    html = html.replace("__API__", backend_url).replace("/assets/index-DM3vjygE.js",backend_url + "dist/index-DM3vjygE.js").replace("/assets/index-CK5lhLvC.css", backend_url + "dist/index-CK5lhLvC.css").replace("vite.svg", backend_url + "dist/vite.svg")
-
-
-    return HTMLResponse(content=html)
+def dashbord():
+    return FileResponse("dist/index.html")
 
 
 
