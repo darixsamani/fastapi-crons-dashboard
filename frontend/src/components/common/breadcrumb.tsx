@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-
 interface BreadcrumbProps {
   pageName: string;
   title: string;
@@ -16,7 +14,7 @@ const Breadcrumb = ({ pageName, title }: BreadcrumbProps) => {
       <nav>
         <ol className="flex items-center gap-2">
           <li>
-            <Link to="/">Accueil /</Link>
+            <a href="/">Accueil /</a>
           </li>
           <li className="text-primary">{title}</li>
         </ol>
