@@ -1,9 +1,12 @@
 import axios from "axios";
+export {};
 
-const API = "http://0.0.0.0:8080/";
+const API = "http://0.0.0.0:8080/"
+
+localStorage.setItem("apiUrl", API)
 
 export const axionsInstance = axios.create({
-    baseURL: API,
+    baseURL: localStorage.getItem("apiUrl") || API,
     maxRedirects: 5, // Number of redirects to follow automatically
     headers: {
         "Accept": "*",
