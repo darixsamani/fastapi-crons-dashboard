@@ -27,7 +27,7 @@ const StatusItem: React.FC<StatusItemProps> = ({ label, value }: StatusItemProps
 );
 
 
-const Home: React.FC = () => {
+const HomePage: React.FC = () => {
   const [status, setStatus] = useState<SystemStatusType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -35,7 +35,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchSystemStatus = async () =>{
 
-        axionsInstance.get("api/system/status").then(response =>{
+        axionsInstance.get("/system/status").then(response =>{
             console.log(response)
             setStatus(response.data)
             setLoading(false)
@@ -90,4 +90,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default HomePage;
