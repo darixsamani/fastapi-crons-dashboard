@@ -22,10 +22,6 @@ app.include_router(get_cron_router(), prefix="/api")
 
 app.mount("/assets", StaticFiles(directory="dist", html=True), name="frontend")
 
-# @app.get("/")
-# def root():
-#     return {"message": "Hello! Let's create a standalone dashboard for the fastapi_crons package."}
-
 @app.get("/")
 def dashbord():
     return FileResponse("dist/index.html")
