@@ -26,7 +26,7 @@ export interface JobStatus {
   updated_at: string;
 }
 
-const Api: React.FC = () => {
+const ApiPage: React.FC = () => {
   const [loading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [dataSource, setDataSource] = useState<Job[]>([]);
@@ -35,7 +35,7 @@ const Api: React.FC = () => {
   useEffect(() => {
     const fetchApi = async () => {
       try {
-        const response = await axionsInstance.get("api");
+        const response = await axionsInstance.get("");
         setDataSource(response.data);
         setIsLoading(false);
         setError(null);
@@ -54,7 +54,7 @@ const Api: React.FC = () => {
   const handleRunJob = async (jobName: string) => {
     try {
       setRunningJob(jobName);
-      await axionsInstance.post(`/api/${jobName}/run?force=false`);
+      await axionsInstance.post(`/${jobName}/run?force=false`);
       message.success(`Job "${jobName}" triggered successfully.`);
     } catch (err) {
       console.error(err);
@@ -182,4 +182,4 @@ const Api: React.FC = () => {
   );
 };
 
-export default Api;
+export default ApiPage;
