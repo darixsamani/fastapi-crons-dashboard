@@ -18,6 +18,7 @@ const items: MenuProps["items"] = [
 
 const LayoutApp: React.FC = () => {
   const [status, setStatus] = React.useState<StatusType>("Unreachable");
+  const [apiUrl, setApiUrl] = React.useState<string>(localStorage.getItem("apiUrl") || "");
   const { pathname, navigate } = useRouter();
 
   const onClick: MenuProps["onClick"] = (e) => {
@@ -26,14 +27,21 @@ const LayoutApp: React.FC = () => {
 
   useEffect(() => {
     const checkApiHealth = () => {
-      fetch(localStorage.getItem("apiUrl")?.replace(/\/+$/, "") + "/system/status")
-        .then((res) => setStatus(res.ok ? "Reachable" : "Unreachable"))
+      fetch(apiUrl?.replace(/\/+$/, "") + "/system/status")
+        .then((res) => {
+          if (res.ok) {
+            localStorage.setItem("apiUrl", apiUrl);
+            setStatus("Reachable");
+          } else {
+            setStatus("Unreachable");
+          }
+        })
         .catch(() => setStatus("Unreachable"));
     };
     checkApiHealth();
     const interval = setInterval(checkApiHealth, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [apiUrl]);
 
   const { token: { colorBgContainer, borderRadiusLG } } = theme.useToken();
 
@@ -57,11 +65,11 @@ const LayoutApp: React.FC = () => {
               Fastapi Crons Dashboard
             </div>
             <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 16 }}>
-              <HostInput onChange={(value) => localStorage.setItem("apiUrl", value)} />
+              <HostInput value={apiUrl} onChange={(value) =>  setApiUrl(value) } />
               <StatusBadge
                 status={status}
                 onClick={() => {
-                  fetch(localStorage.getItem("apiUrl")?.replace(/\/+$/, "") + "/system/status")
+                  fetch(apiUrl?.replace(/\/+$/, "") + "/system/status")
                     .then((res) => res.ok ? message.success("API is healthy") : message.error("API is not healthy"))
                     .catch(() => message.error("API is not healthy"));
                 }}
