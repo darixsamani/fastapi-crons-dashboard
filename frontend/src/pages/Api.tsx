@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Spin, Table, Tag, Modal, Button, message } from "antd";
 import { ColumnsType } from "antd/es/table";
-import { axionsInstance } from "../utils/constants";
+import { buildApiUrl } from "../utils/constants";
 
 export interface Job {
   name: string;
@@ -35,8 +35,15 @@ const ApiPage: React.FC = () => {
   useEffect(() => {
     const fetchApi = async () => {
       try {
-        const response = await axionsInstance.get("");
-        setDataSource(response.data);
+        console.log("Fetching API data from:", buildApiUrl(""));
+        const response = await fetch(buildApiUrl(""));
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const data = await response.json();
+        setDataSource(data);
         setIsLoading(false);
         setError(null);
       } catch (err) {
@@ -54,7 +61,14 @@ const ApiPage: React.FC = () => {
   const handleRunJob = async (jobName: string) => {
     try {
       setRunningJob(jobName);
-      await axionsInstance.post(`/${jobName}/run?force=false`);
+      const response = await fetch(buildApiUrl(`/${jobName}/run?force=false`), {
+        method: "POST",
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
       message.success(`Job "${jobName}" triggered successfully.`);
     } catch (err) {
       console.error(err);
