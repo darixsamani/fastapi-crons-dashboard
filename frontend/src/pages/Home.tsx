@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { axionsInstance } from "../utils/constants";
+import { buildApiUrl } from "../utils/constants";
 import { Spin } from 'antd';
 
 interface SystemStatusType {
@@ -34,16 +34,23 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     const fetchSystemStatus = async () =>{
+        try {
+          console.log("Fetching system status from:", buildApiUrl('/system/status'));
+          const response = await fetch(buildApiUrl('/system/status'));
 
-        axionsInstance.get("/system/status").then(response =>{
-            console.log(response)
-            setStatus(response.data)
-            setLoading(false)
-        }).catch(error => {
-            console.log(error)
-            setError(error)
-            setLoading(false)
-        })
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+
+          const data = await response.json();
+          setStatus(data);
+          setLoading(false);
+          setError(null);
+        } catch (err) {
+          console.log(err);
+          setError('Failed to load system status');
+          setLoading(false);
+        }
     }
 
     const interval = setInterval(fetchSystemStatus, 5000)
